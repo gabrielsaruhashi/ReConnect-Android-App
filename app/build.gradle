@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.goprojectreconnect.projectreconnect"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -28,18 +28,21 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    testCompile 'junit:junit:4.12'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)' // facebook API
-    compile 'com.github.bumptech.glide:glide:3.8.0' // glide for images
-    compile 'jp.wasabeef:glide-transformations:2.0.2' // transformations
-    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'     // If you want to use the GPU Filters
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.github.bumptech.glide:glide:3.8.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.parse.bolts:bolts-android:1.4.0'
-    compile 'com.parse:parse-android:1.15.8' // Parse calls
-    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0' // for logging API calls to LogCat
-    compile 'com.parse:parsefacebookutils-v4-android:1.10.4@aar' // facebook parse integration
-    compile 'com.parse:parse-livequery-android:1.0.4' // live query
-
+    compile 'com.parse:parse-android:1.15.8'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.parse:parsefacebookutils-v4-android:1.10.4@aar'
+    compile 'com.parse:parse-livequery-android:1.0.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
 }

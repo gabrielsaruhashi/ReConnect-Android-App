@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Project ReConnect</string>
 
+    <!-- Facebook API -->
+    <string name="facebook_app_id">674378379421788</string>
+    <string name="fb_login_protocol_scheme">fb674378379421788</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -14,8 +18,18 @@
         completions."
     </string>
 
-    <!-- Facebook API -->
-    <string name="facebook_app_id">674378379421788</string>
-    <string name="fb_login_protocol_scheme">fb674378379421788</string>
+    <!-- Strings for signup page-->
+    <string name="hi_message">Hello</string>
+    <string name="welcome_message">We\'re so happy to have you!</string>
+
+    <!-- Labels for preference radio group -->
+    <string name="preference_label">What are you interested in?</string>
+
+    <string name="sports_label">Sports</string>
+    <string name="music_label">Music</string>
+    <string name="food_label">Food</string>
+    <string name="culture_label">Culture</string>
+    <string name="city_transportation_label">Transportation</string>
+    <string name="language_label">Languages</string>
 
 </resources>

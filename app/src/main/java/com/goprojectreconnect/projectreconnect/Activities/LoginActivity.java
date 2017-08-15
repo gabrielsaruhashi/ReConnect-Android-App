@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                 newCustomUser.setSomeString("profile_image_url", profileImageUrl);
                                 // start activity for context
                                 Log.d("MyApp", "User signed up and logged in through Facebook!");
-                                onLoginSuccess();
+                                onSuccessfulSignUp();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -123,6 +123,10 @@ public class LoginActivity extends AppCompatActivity {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void onSuccessfulSignUp() {
+        Intent i = new Intent(context, SignUpActivity.class);
+        context.startActivity(i);
+    }
     public void onLoginSuccess() {
         /*
         Intent i = new Intent(context, MainActivity.class);
