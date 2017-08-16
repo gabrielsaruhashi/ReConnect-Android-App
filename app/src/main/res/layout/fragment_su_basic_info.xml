@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.goprojectreconnect.projectreconnect.Activities.SignUpActivity"
+    android:layout_margin="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/ivProfilePicture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@color/cardview_dark_background" />
+
+    <LinearLayout
+        android:id="@+id/llSalute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/ivProfilePicture"
+        android:layout_marginTop="@dimen/element_margin"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:id="@+id/tvHi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/hi_message" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/element_margin"
+            android:layout_marginLeft="@dimen/element_margin"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-condensed" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_below="@id/llSalute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/element_margin"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/welcome_message"
+        android:layout_centerHorizontal="true"/>
+
+
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_below="@id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:layout_marginTop="@dimen/element_margin"/>
+
+    <EditText
+        android:id="@+id/etCity"
+        android:layout_below="@id/etPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="City of residence"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="99dp" />
+
+    <EditText
+        android:id="@+id/etCountry"
+        android:layout_below="@id/etCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Country of residence"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="40dp" />
+
+    <TextView
+        android:id="@+id/tvPreferenceLabel"
+        android:layout_below="@id/etCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/element_margin"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/preference_label" />
+
+    <LinearLayout
+        android:layout_below="@id/tvPreferenceLabel"
+        android:id="@+id/rgInterests"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbSports"
+                android:text="@string/sports_label" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbMusic"
+                android:text="@string/music_label"
+                android:layout_marginLeft="@dimen/radio_button_horizontal_margin"
+                android:layout_marginStart="@dimen/radio_button_horizontal_margin"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbFood"
+                android:text="@string/food_label"
+                android:layout_marginLeft="@dimen/radio_button_horizontal_margin"
+                android:layout_marginStart="@dimen/radio_button_horizontal_margin"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbCulture"
+                android:text="@string/culture_label" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbCityTransportation"
+                android:text="@string/city_transportation_label"
+                android:layout_marginLeft="@dimen/radio_button_horizontal_margin"
+                android:layout_marginStart="@dimen/radio_button_horizontal_margin" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cbLanguage"
+                android:text="@string/language_label"
+                android:layout_marginLeft="@dimen/radio_button_horizontal_margin"
+                android:layout_marginStart="@dimen/radio_button_horizontal_margin"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/button_next" />
+
+</RelativeLayout>

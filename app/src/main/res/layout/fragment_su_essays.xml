@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.goprojectreconnect.projectreconnect.Fragments.SignUpEssaysFragment"
+    android:layout_marginLeft="@dimen/essay_horizontal_margin"
+    android:layout_marginStart="@dimen/essay_horizontal_margin"
+    android:layout_marginRight="@dimen/essay_horizontal_margin"
+    android:layout_marginEnd="@dimen/essay_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+    <TextView
+        android:id="@+id/tvAboutLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:text="@string/about_me_label"/>
+    <EditText
+        android:id="@+id/etAboutMe"
+        android:layout_marginTop="@dimen/element_margin"
+        android:background="@color/essay_bg_gray"
+        android:layout_below="@id/tvAboutLabel"
+        android:hint="@string/about_me_hint"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/tvHope"
+        android:layout_below="@id/etAboutMe"
+        android:layout_marginTop="@dimen/element_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:text="@string/hope_label"/>
+    <EditText
+        android:id="@+id/etHope"
+        android:layout_marginTop="@dimen/element_margin"
+        android:background="@color/essay_bg_gray"
+        android:layout_below="@id/tvHope"
+        android:hint="@string/hope_hint"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <!-- Define integration question -->
+    <TextView
+        android:id="@+id/tvIntegration"
+        android:layout_below="@id/etHope"
+        android:layout_marginTop="@dimen/element_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="24sp"
+        android:text="@string/integration_label"/>
+    <EditText
+        android:id="@+id/etIntegration"
+        android:layout_marginTop="@dimen/element_margin"
+        android:background="@color/essay_bg_gray"
+        android:layout_below="@id/tvIntegration"
+        android:hint="@string/integration_hint"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etIntegration"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/button_next" />
+
+</RelativeLayout>

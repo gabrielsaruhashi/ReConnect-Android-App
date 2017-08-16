@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     // Facebook client and permissions for login
     List<String> permissions;
     FacebookClient client;
+    ParseUser currentUser;
 
     // UI references.
     private LoginButton loginButton;
@@ -52,7 +53,13 @@ public class LoginActivity extends AppCompatActivity {
         // initiate client and context
         client = ReConnectApplication.getFacebookRestClient();
         context = this;
+        currentUser = ReConnectApplication.getCurrentUser();
 
+        // check if user is already authenticated
+        if (currentUser != null && currentUser.isAuthenticated()) {
+            onSuccessfulSignUp();
+
+        }
         // create permissions
         permissions = Arrays.asList("user_friends");
         // facebook authentication
@@ -111,7 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                     user.getCurrentUser();
                     user.saveInBackground();
                     Log.d("MyApp", "User logged in through Facebook!");
-                    onLoginSuccess();
+                    //TODO replace with OnLoginSuccess
+                    onSuccessfulSignUp();
                 }
             }
         });
@@ -128,9 +136,9 @@ public class LoginActivity extends AppCompatActivity {
         context.startActivity(i);
     }
     public void onLoginSuccess() {
-        /*
+
         Intent i = new Intent(context, MainActivity.class);
-        context.startActivity(i); */
+        context.startActivity(i);
     }
 
 

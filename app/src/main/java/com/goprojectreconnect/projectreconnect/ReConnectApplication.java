@@ -2,17 +2,13 @@ package com.goprojectreconnect.projectreconnect;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.goprojectreconnect.projectreconnect.Clients.FacebookClient;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,21 +59,6 @@ public class ReConnectApplication extends Application {
 
         // instantiate parse-facebook
         ParseFacebookUtils.initialize(this);
-
-        // test
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.i("SAVE_WORKED", "ay");
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-
 
         // set context
         ReConnectApplication.context = this;

@@ -5,18 +5,12 @@
     <string name="facebook_app_id">674378379421788</string>
     <string name="fb_login_protocol_scheme">fb674378379421788</string>
 
+    <!-- Youtube API -->
+    <string name="youtube_api_key">AIzaSyCSJQx1eppo70vglAykR_r1z4KtNw4Nh44</string>
+
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="sign_up_label">Sign Up</string>
+    <string name="with_label">with</string>
 
     <!-- Strings for signup page-->
     <string name="hi_message">Hello</string>
@@ -31,5 +25,25 @@
     <string name="culture_label">Culture</string>
     <string name="city_transportation_label">Transportation</string>
     <string name="language_label">Languages</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- Labels for essays fragment -->
+    <string name="about_me_label">About me</string>
+    <string name="about_me_hint">A few words about myself</string>
+    <string name="hope_label">Hope for the future</string>
+    <string name="hope_hint">My hope for the future is&#8230;</string>
+    <string name="integration_label">Define integration</string>
+    <string name="integration_hint">For me integration means&#8230;</string>
+
+    <!-- Labels for video fragment -->
+    <string name="terms_label">TERMS &amp; CONDITIONS</string>
+    <string name="terms_sentence">By clicking on \"Complete\", I agree with the terms and conditions</string>
+
+    <!-- Strings for buttons -->
+    <string name="button_complete">Complete</string>
+    <string name="button_next">Next</string>
+
 
 </resources>
