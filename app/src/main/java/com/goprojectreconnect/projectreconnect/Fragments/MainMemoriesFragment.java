@@ -45,24 +45,24 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.goprojectreconnect.projectreconnect.Adapters.MemoryMapAdapter;
 import com.goprojectreconnect.projectreconnect.R;
-import com.parse.GetCallback;
-import com.parse.ParseException;
+import com.goprojectreconnect.projectreconnect.ReConnectApplication;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.goprojectreconnect.projectreconnect.R.id.indicator;
+import static android.app.Activity.RESULT_OK;
 
 
 public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    ParseUser currentUser;
     ArrayList<ParseFile> pictures;
+    ArrayList<String> uploaderPictures;
     RecyclerView rvPhotos;
     MemoryMapAdapter mapAdapter;
     Context context;
@@ -84,6 +84,7 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentUser = ReConnectApplication.getCurrentUser();
         //TODO what is the best way to store parsefiles
         // get pictures associated with country from database
     }
@@ -96,13 +97,14 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
         context = getActivity();
 
         // instantiate pictures
+        //TODO get all pictures and uploaders
         pictures = new ArrayList<ParseFile>();
+        uploaderPictures = new ArrayList<String>();
 
         // instantiate recycler view and adapter
         rvPhotos = (RecyclerView) view.findViewById(R.id.rvPhotos);
 
-
-        mapAdapter = new MemoryMapAdapter(pictures);
+        mapAdapter = new MemoryMapAdapter(pictures, uploaderPictures);
 
         // set up the recyclerview adapter and layout manager
         rvPhotos.setAdapter(mapAdapter);
@@ -138,60 +140,39 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
 
             // retrieve a collection of selected images
             ClipData clipData = data.getClipData();
-            final ArrayList<ParseFile> userUploadedPictures = new ArrayList<>();
+
             // iterate over these images
             if (clipData != null ) {
                 for (int i = 0; i < clipData.getItemCount(); i++) {
                     try {
-                        Bitmap selectedImageBitmap = MediaStore.Images.Media.getBitmap(MemoryDetailsActivity.this.getContentResolver(), clipData.getItemAt(i).getUri());
+                        Bitmap selectedImageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), clipData.getItemAt(i).getUri());
                         // Convert it to byte
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                        selectedImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                         byte[] image = stream.toByteArray();
 
                         // save uploaded picture to the cloud as a parsefile
                         final ParseFile file = new ParseFile("image.JPEG", image);
+                        file.saveInBackground();
 
                         // add to array
-                        userUploadedPictures.add(file);
-
+                        pictures.add(file);
                         // save user profile picture to array
-                        userImageUrls.add(currentUser.getString("profile_image_url"));
-
-                        // keep track of files uploaded by user
-                        userPicturesIds.add(file.getName());
-
-                        file.saveInBackground();
+                        uploaderPictures.add(currentUser.getString("profile_image_url"));
 
                     } catch (IOException e) {
                         e.getMessage();
                     }
                 }
 
-                // after going through all the picture, update database
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Memory");
-                query.getInBackground(memoryId, new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject updatedMemory, ParseException e) {
-                        if (e == null) {
-                            // update pictures
-                            // update local array
-                            pictures.addAll(userUploadedPictures);
-                            mapAdapter.notifyDataSetChanged();
-
-                            updatedMemory.put("pictures_parse_files", pictures);
-                            // update senders
-                            updatedMemory.put("user_image_urls", userImageUrls);
-                            updatedMemory.saveInBackground();
-                        } else {
-                            e.getMessage();
-                        }
-                    }
-                });
+                // notify adapter that data set changed
+                mapAdapter.notifyDataSetChanged();
+                rvPhotos.scrollToPosition(0);
+                // TODO update database based on location
             }
 
         } else if (resultCode == Activity.RESULT_CANCELED) { // in case user cancels selection
-            Toast.makeText(MemoryDetailsActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -24,11 +24,12 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class MemoryMapAdapter extends RecyclerView.Adapter<MemoryMapAdapter.ViewHolder> {
 
     ArrayList<ParseFile> pictures;
-    ArrayList<String> upladerPictures;
+    ArrayList<String> uploaderPictures;
     Context context;
 
-    public MemoryMapAdapter(ArrayList<ParseFile> pictures) {
+    public MemoryMapAdapter(ArrayList<ParseFile> pictures, ArrayList<String> uploaderPictures) {
         this.pictures = pictures;
+        this.uploaderPictures = uploaderPictures;
     }
 
     @Override
@@ -52,10 +53,11 @@ public class MemoryMapAdapter extends RecyclerView.Adapter<MemoryMapAdapter.View
         // populate views
         Glide.with(context)
                 .load(picture.getUrl())
+                .fitCenter()
                 .into(holder.ivPicture);
 
         Glide.with(context)
-                .load(upladerPictures.get(position))
+                .load(uploaderPictures.get(position))
                 .bitmapTransform(new CropCircleTransformation(context))
                 .into(holder.ivUploaderPicture);
     }

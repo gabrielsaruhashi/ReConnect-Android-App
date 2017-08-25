@@ -2,31 +2,32 @@ package com.goprojectreconnect.projectreconnect.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.goprojectreconnect.projectreconnect.Fragments.MainAddReConnectionFragment;
+import com.goprojectreconnect.projectreconnect.Fragments.MainInboxFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainMemoriesFragment;
 import com.goprojectreconnect.projectreconnect.R;
+import com.goprojectreconnect.projectreconnect.ReConnectApplication;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity {
     // UI References
@@ -34,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.container) ViewPager mViewPager;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
+
+    private int imageResId[] = new int[] {R.drawable.ic_group_add, R.drawable.ic_photo, R.drawable.ic_mail};
+    private ParseUser currentUser;
     private MainFragmentPagerAdapter mMainFragmentPagerAdapter;
-    private MainMemoriesFragment mainMemoriesFragment;
     Context context;
 
     @Override
@@ -46,10 +49,14 @@ public class MainActivity extends AppCompatActivity {
         // enable vectors
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        // setup toolbar
+
+        //setup toolbar
         setSupportActionBar(toolbar);
+
+
         // instantiate context
         context = this;
+        currentUser = ReConnectApplication.getCurrentUser();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -59,8 +66,27 @@ public class MainActivity extends AppCompatActivity {
         // give the Tab Layout the ViewPager
         tabLayout.setupWithViewPager(mViewPager);
 
+        // add imageview with profile picture on actionbar
+        setupToolbar();
+
     }
 
+    public void setupToolbar() {
+        ImageView ivToolbarProfilePicture = (ImageView) findViewById(R.id.ivToolbarProfilePicture);
+        TextView tvTitle = (TextView) findViewById(R.id.headerText);
+
+        tvTitle.setText("ReConnect");
+
+        Glide.with(context)
+                .load(currentUser.getString("profile_image_url"))
+                .bitmapTransform(new CropCircleTransformation(context))
+                .into(ivToolbarProfilePicture);
+
+        for (int i = 0; i < imageResId.length; i++) {
+            tabLayout.getTabAt(i).setIcon(imageResId[i]);
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,11 +124,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        private String tabTitles[] = new String[] { "Feed", "ReConnect", "Memories" };
-        private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_group_add, R.drawable.ic_photo};
         private final int PAGE_COUNT = 3;
         private MainAddReConnectionFragment addReConnectionFragment;
         private MainMemoriesFragment mainMemoriesFragment;
+        private MainInboxFragment mainInboxFragment;
 
 
         public MainFragmentPagerAdapter(FragmentManager fm) {
@@ -119,6 +144,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (position == 1) {
                 mainMemoriesFragment = getMainMemoriesInstace();
                 return mainMemoriesFragment;
+            } else if (position == 2) {
+                mainInboxFragment = getMainInboxInstance();
+                return mainInboxFragment;
             } else {
                 return null;
             }
@@ -128,12 +156,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return PAGE_COUNT;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            // Generate title based on item position
+
+            /*// Generate title based on item position
             Drawable image = ContextCompat.getDrawable(context, imageResId[position]);
             //Drawable image = context.getResources().getDrawable(imageResId[position]);
             image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
@@ -141,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
             SpannableString sb = new SpannableString("   " + tabTitles[position]);
             ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
             sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            return sb;
+            return sb;*/
+
+            return null;
         }
 
         private MainAddReConnectionFragment getAddReconnectionInstance() {
@@ -152,6 +183,11 @@ public class MainActivity extends AppCompatActivity {
         private MainMemoriesFragment getMainMemoriesInstace() {
             return (mainMemoriesFragment == null)?
                     new MainMemoriesFragment() : mainMemoriesFragment;
+        }
+
+        private MainInboxFragment getMainInboxInstance() {
+            return (mainInboxFragment == null)?
+                    new MainInboxFragment() : mainInboxFragment;
         }
     }
 

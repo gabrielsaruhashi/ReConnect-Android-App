@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="essay_bg_gray">#d2dfe7</color>
+    <color name="black">#000000</color>
 
 </resources>

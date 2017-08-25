@@ -9,6 +9,7 @@
     android:layout_marginStart="@dimen/activity_horizontal_margin"
     android:layout_marginEnd="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/element_margin"
     card_view:cardCornerRadius="6dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
