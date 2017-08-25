@@ -18,11 +18,11 @@ public class FacebookClient {
         this.context = context;
     }
 
-    public void getFriendsUsingAppAsynch(GraphRequest.Callback callback) {
+    public void getFriendsUsingApp(GraphRequest.Callback callback) {
         Bundle params = new Bundle();
         params.putString("fields", "id,name,picture.type(large)");
         new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/friends", params, HttpMethod.GET,
-                callback).executeAsync();
+                callback).executeAndWait();
     }
 
     public void getMyInfo(GraphRequest.Callback callback) {

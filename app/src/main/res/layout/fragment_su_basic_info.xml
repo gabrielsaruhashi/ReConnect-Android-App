@@ -70,7 +70,7 @@
         android:inputType="phone"
         android:layout_marginTop="@dimen/element_margin"/>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/etCity"
         android:layout_below="@id/etPhone"
         android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
         tools:layout_editor_absoluteX="41dp"
         tools:layout_editor_absoluteY="99dp" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/etCountry"
         android:layout_below="@id/etCity"
         android:layout_width="wrap_content"

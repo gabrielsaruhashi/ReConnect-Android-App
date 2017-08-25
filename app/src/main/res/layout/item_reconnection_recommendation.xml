@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    card_view:cardCornerRadius="6dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/ivProfilePicture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/element_margin" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivProfilePicture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/element_small_margin"
+            android:text="Textview"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:id="@+id/tvAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/tvName"
+            android:layout_marginTop="@dimen/element_small_margin"
+            android:text="Hey" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tvAbout"
+            android:layout_alignRight="@+id/tvAbout"
+            android:layout_below="@+id/tvAbout"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="@dimen/element_small_margin" />
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(32 ReConnections)"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:layout_alignTop="@+id/ratingBar"
+            android:layout_toRightOf="@+id/tvAbout"
+            android:layout_toEndOf="@+id/tvAbout" />
+
+        <Button
+            android:id="@+id/btReConnect"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/ratingBar"
+            android:layout_alignRight="@id/ratingBar"
+            android:layout_below="@id/ratingBar"
+            android:paddingEnd="@dimen/button_horizontal_padding"
+            android:paddingLeft="@dimen/button_horizontal_padding"
+            android:paddingRight="@dimen/button_horizontal_padding"
+            android:paddingStart="@dimen/button_horizontal_padding"
+            android:text="@string/button_reconnect"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btSeeProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/button_horizontal_padding"
+            android:paddingLeft="@dimen/button_horizontal_padding"
+            android:paddingRight="@dimen/button_horizontal_padding"
+            android:paddingEnd="@dimen/button_horizontal_padding"
+            android:text="@string/button_see_profile"
+            android:layout_alignBaseline="@+id/btReConnect"
+            android:layout_alignBottom="@+id/btReConnect"
+            android:layout_alignLeft="@+id/tvCount"
+            android:layout_alignStart="@+id/tvCount" />
+
+
+        <ImageView
+            android:id="@+id/icLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btReConnect"
+            android:layout_alignStart="@id/btReConnect"
+            android:layout_below="@id/btReConnect"
+            app:srcCompat="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/tvFromLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/element_small_margin"
+            android:layout_marginStart="@dimen/element_small_margin"
+            android:layout_marginTop="4dp"
+            android:text="@string/from_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_below="@+id/btReConnect"
+            android:layout_toRightOf="@+id/icLocation"
+            android:layout_toEndOf="@+id/icLocation" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvFromLabel"
+            android:layout_alignBottom="@+id/tvFromLabel"
+            android:layout_alignEnd="@+id/btSeeProfile"
+            android:layout_alignRight="@+id/btSeeProfile"
+            android:text="Paris"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+        <ImageView
+            android:id="@+id/icSince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btReConnect"
+            android:layout_alignStart="@id/btReConnect"
+            android:layout_below="@id/icLocation"
+            app:srcCompat="@drawable/ic_person" />
+
+        <TextView
+            android:id="@+id/tvSinceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/element_small_margin"
+            android:layout_marginStart="@dimen/element_small_margin"
+            android:layout_marginTop="4dp"
+            android:text="@string/since_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_below="@+id/icLocation"
+            android:layout_toRightOf="@+id/icSince"
+            android:layout_toEndOf="@+id/icSince" />
+
+        <TextView
+            android:id="@+id/tvSince"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvSinceLabel"
+            android:layout_alignBottom="@+id/tvSinceLabel"
+            android:layout_alignEnd="@+id/btSeeProfile"
+            android:layout_alignRight="@+id/btSeeProfile"
+            android:text="September 2017"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+        <!-- Mutual reconnections -->
+        <ImageView
+            android:id="@+id/icMutual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btReConnect"
+            android:layout_alignStart="@id/btReConnect"
+            android:layout_below="@id/icSince"
+            app:srcCompat="@drawable/ic_share" />
+
+        <TextView
+            android:id="@+id/tvMutualLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/element_small_margin"
+            android:layout_marginStart="@dimen/element_small_margin"
+            android:layout_marginTop="4dp"
+            android:text="@string/mutual_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_below="@+id/icSince"
+            android:layout_toRightOf="@+id/icSince"
+            android:layout_toEndOf="@+id/icSince" />
+
+        <TextView
+            android:id="@+id/tvMutual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/icMutual"
+            android:layout_alignEnd="@+id/btSeeProfile"
+            android:layout_alignRight="@+id/btSeeProfile"
+            android:text="4 Mutual"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:layout_alignTop="@+id/tvMutualLabel" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

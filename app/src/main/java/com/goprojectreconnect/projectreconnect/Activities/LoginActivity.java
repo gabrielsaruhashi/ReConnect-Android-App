@@ -57,8 +57,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // check if user is already authenticated
         if (currentUser != null && currentUser.isAuthenticated()) {
-            onSuccessfulSignUp();
 
+            // check if user already filled all the info
+            if (currentUser.getString("about_essay") == null) {
+                onSuccessfulSignUp();
+            } else {
+                onLoginSuccess();
+            }
         }
         // create permissions
         permissions = Arrays.asList("user_friends");
@@ -119,7 +124,10 @@ public class LoginActivity extends AppCompatActivity {
                     user.saveInBackground();
                     Log.d("MyApp", "User logged in through Facebook!");
                     //TODO replace with OnLoginSuccess
-                    onSuccessfulSignUp();
+                    if (user.getCurrentUser().getString("integration_essay") == null) {
+                        onSuccessfulSignUp();
+                    }
+                    onLoginSuccess();
                 }
             }
         });

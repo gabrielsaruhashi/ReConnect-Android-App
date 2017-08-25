@@ -48,7 +48,7 @@ public class SignUpVideo extends Fragment {
         YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
 
         // initialize player fragment with API key
-        youTubePlayerFragment.initialize(getResources().getString(R.string.youtube_api_key),
+        youTubePlayerFragment.initialize(getResources().getString(R.string.google_api_key),
                 new YouTubePlayer.OnInitializedListener() {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider,

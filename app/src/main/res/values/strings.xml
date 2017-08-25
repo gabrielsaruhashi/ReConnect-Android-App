@@ -6,7 +6,7 @@
     <string name="fb_login_protocol_scheme">fb674378379421788</string>
 
     <!-- Youtube API -->
-    <string name="youtube_api_key">AIzaSyCSJQx1eppo70vglAykR_r1z4KtNw4Nh44</string>
+    <string name="google_api_key">AIzaSyA0M6oFmhK_WeyNxvN9pI2IUy5056q7-2A</string>
 
     <!-- Strings related to login -->
     <string name="sign_up_label">Sign Up</string>
@@ -15,6 +15,9 @@
     <!-- Strings for signup page-->
     <string name="hi_message">Hello</string>
     <string name="welcome_message">We\'re so happy to have you!</string>
+    <!-- getString(String, Object...) does not support HTML tags directly, they need to be encoded first.
+   Original string: <b>%1$s</b><br/><i>Place Id: %2$s</i><br/>Address: %3$s<br/>Phone: %4$s<br/>Website: %5$s-->
+    <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
 
     <!-- Labels for preference radio group -->
     <string name="preference_label">What are you interested in?</string>
@@ -45,5 +48,14 @@
     <string name="button_complete">Complete</string>
     <string name="button_next">Next</string>
 
+    <!--  Strings for Adding page -->
+    <string name="button_reconnect">ReConnect</string>
+    <string name="button_see_profile">See Profile</string>
+    <string name="from_label">From</string>
+    <string name="since_label">Member since</string>
+    <string name="mutual_label">Mutual ReConnections</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

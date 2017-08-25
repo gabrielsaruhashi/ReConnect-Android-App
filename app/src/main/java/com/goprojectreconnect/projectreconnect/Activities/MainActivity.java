@@ -1,40 +1,63 @@
 package com.goprojectreconnect.projectreconnect.Activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.goprojectreconnect.projectreconnect.Fragments.MainAddReConnectionFragment;
+import com.goprojectreconnect.projectreconnect.Fragments.MainMemoriesFragment;
 import com.goprojectreconnect.projectreconnect.R;
+import com.parse.ParseUser;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    // UI References
+    @BindView(R.id.sliding_tabs) TabLayout tabLayout;
+    @BindView(R.id.container) ViewPager mViewPager;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private MainFragmentPagerAdapter mMainFragmentPagerAdapter;
+    private MainMemoriesFragment mainMemoriesFragment;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        // enable vectors
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setup toolbar
         setSupportActionBar(toolbar);
+        // instantiate context
+        context = this;
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        mMainFragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setAdapter(mMainFragmentPagerAdapter);
+        // give the Tab Layout the ViewPager
+        tabLayout.setupWithViewPager(mViewPager);
 
     }
 
@@ -55,54 +78,34 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            //TODO remove this
+
+            LoginManager.getInstance().logOut();
+            ParseUser.logOut();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            context.startActivity(intent);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
+     FragmentPagerAdapter for the main activity
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private String tabTitles[] = new String[] { "Feed", "ReConnect", "Memories" };
+        private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_group_add, R.drawable.ic_photo};
+        private final int PAGE_COUNT = 3;
+        private MainAddReConnectionFragment addReConnectionFragment;
+        private MainMemoriesFragment mainMemoriesFragment;
+
+
+        public MainFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -110,26 +113,46 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            if (position == 0) {
+                addReConnectionFragment = getAddReconnectionInstance();
+                return addReConnectionFragment;
+            } else if (position == 1) {
+                mainMemoriesFragment = getMainMemoriesInstace();
+                return mainMemoriesFragment;
+            } else {
+                return null;
+            }
+
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            // Generate title based on item position
+            Drawable image = ContextCompat.getDrawable(context, imageResId[position]);
+            //Drawable image = context.getResources().getDrawable(imageResId[position]);
+            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+            // Replace blank spaces with image icon
+            SpannableString sb = new SpannableString("   " + tabTitles[position]);
+            ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+            sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return sb;
+        }
+
+        private MainAddReConnectionFragment getAddReconnectionInstance() {
+            return (addReConnectionFragment == null)?
+                    new MainAddReConnectionFragment() : addReConnectionFragment;
+        }
+
+        private MainMemoriesFragment getMainMemoriesInstace() {
+            return (mainMemoriesFragment == null)?
+                    new MainMemoriesFragment() : mainMemoriesFragment;
         }
     }
+
 }

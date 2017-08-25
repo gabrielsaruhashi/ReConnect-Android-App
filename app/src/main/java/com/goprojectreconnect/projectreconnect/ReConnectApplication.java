@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.android.gms.maps.model.LatLng;
 import com.goprojectreconnect.projectreconnect.Clients.FacebookClient;
+import com.goprojectreconnect.projectreconnect.Models.FacebookFriend;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
@@ -14,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TreeSet;
 
 import okhttp3.OkHttpClient;
@@ -28,18 +31,19 @@ public class ReConnectApplication extends Application {
     // application context
     private static Context context;
     private static FacebookClient facebookClient;
-    private static ArrayList<Long> facebookFriendsIds;
-
+    private static ArrayList<FacebookFriend> facebookFriends;
     private static TreeSet facebookPermissionsSet;
     private static ParseUser currentUser;
     private static boolean mFirstLoad;
+    private static final LatLng PARIS_LATLNG = new LatLng(48.8566,2.3522);
+    private static final ArrayList<LatLng> RECONNECT_CHAPTERS = new ArrayList<LatLng>(Arrays.asList(PARIS_LATLNG));
 
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // initialize boolean
+        // initialize boolean and instantiate reConnectChapters
         mFirstLoad = true;
 
         // Use for monitoring Parse network traffic
@@ -62,6 +66,10 @@ public class ReConnectApplication extends Application {
 
         // set context
         ReConnectApplication.context = this;
+
+        // call setup functions
+        getCurrentUser();
+        getFacebookFriends();
     }
 
 
@@ -79,6 +87,53 @@ public class ReConnectApplication extends Application {
         }
 
         return currentUser;
+    }
+
+    public static ArrayList<FacebookFriend> getFacebookFriends() {
+
+        if (mFirstLoad && currentUser != null && currentUser.isAuthenticated()) {
+            facebookFriends = new ArrayList<>();
+            // start a new thread to execute the runnable codeblock
+            Thread thread = new Thread( ) {
+                @Override
+                public void run() {
+
+                    // the code to execute when the runnable is processed by a thread
+                    FacebookClient client = ReConnectApplication.getFacebookRestClient();
+
+                    client.getFriendsUsingApp(new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            // gets friends ids
+                            try {
+                                JSONArray friends = response.getJSONObject().getJSONArray("data");
+                                for (int i = 0; i < friends.length(); i++) {
+                                    FacebookFriend friend = FacebookFriend.fromJSON(friends.getJSONObject(i));
+                                    facebookFriends.add(friend);
+                                }
+                                mFirstLoad = false;
+
+                            } catch(JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            };
+
+            // start thread
+            thread.start();
+            // set first load to false for future getFacebookFriends() call
+
+            // wait for the thread to return the facebook API request
+            try {
+                thread.join(0);
+            } catch (InterruptedException i) {
+                i.getMessage();
+            }
+
+        }
+        // return your fb friends' ids
+        return facebookFriends;
     }
 
     public static TreeSet getFacebookPermissionsSet() {
@@ -109,6 +164,8 @@ public class ReConnectApplication extends Application {
         return facebookPermissionsSet;
     }
 
-
+    public static ArrayList<LatLng> getReConnectChapters() {
+        return RECONNECT_CHAPTERS;
+    }
 }
 
