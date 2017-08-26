@@ -78,6 +78,9 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient;
 
 
+    //TODO kill this variable
+    static boolean mFirst;
+
     public MainMemoriesFragment() {
         // Required empty public constructor
     }
@@ -88,41 +91,50 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment & context
         currentUser = ReConnectApplication.getCurrentUser();
-        View view = inflater.inflate(R.layout.fragment_main_memories, container, false);
-        context = getActivity();
 
-        // instantiate pictures
-        //TODO get all pictures and uploaders
-        pictures = new ArrayList<ParseFile>();
-        uploaderPictures = new ArrayList<String>();
+        if (mFirst == false) {
+            View view = inflater.inflate(R.layout.fragment_main_memories, container, false);
+            context = getActivity();
 
-        // instantiate recycler view and adapter
-        rvPhotos = (RecyclerView) view.findViewById(R.id.rvPhotos);
+            // instantiate pictures
+            //TODO get all pictures and uploaders
+            pictures = new ArrayList<ParseFile>();
+            uploaderPictures = new ArrayList<String>();
 
-        mapAdapter = new MemoryMapAdapter(pictures, uploaderPictures);
+            // instantiate recycler view and adapter
+            rvPhotos = (RecyclerView) view.findViewById(R.id.rvPhotos);
 
-        // set up the recyclerview adapter and layout manager
-        rvPhotos.setAdapter(mapAdapter);
-        rvPhotos.setLayoutManager(new GridLayoutManager(context, 3));
+            mapAdapter = new MemoryMapAdapter(pictures, uploaderPictures);
 
-        // get reference to map fragment
-        mapFrag = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFrag.getMapAsync(this);
+            // set up the recyclerview adapter and layout manager
+            rvPhotos.setAdapter(mapAdapter);
+            rvPhotos.setLayoutManager(new GridLayoutManager(context, 3));
 
-        // instantiate fab
-        myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new Intent();
-                photoPickerIntent.setType("image/*");
-                photoPickerIntent.setAction(Intent.ACTION_GET_CONTENT);//
-                photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                startActivityForResult(Intent.createChooser(photoPickerIntent, "Select Picture"), SELECT_IMAGE);
-            }
-        });
+            // get reference to map fragment
+            mapFrag = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+            mapFrag.getMapAsync(this);
 
-        return view;
+            // instantiate fab
+            myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+            myFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent photoPickerIntent = new Intent();
+                    photoPickerIntent.setType("image/*");
+                    photoPickerIntent.setAction(Intent.ACTION_GET_CONTENT);//
+                    photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    startActivityForResult(Intent.createChooser(photoPickerIntent, "Select Picture"), SELECT_IMAGE);
+                }
+            });
+
+            // TODO destroy
+            mFirst = true;
+
+            return view;
+        }
+
+        return null;
+
     }
 
     // when user returns from picking pictures
