@@ -12,6 +12,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.goprojectreconnect.projectreconnect.Activities.MainActivity;
 import com.goprojectreconnect.projectreconnect.Activities.ProfileActivity;
 import com.goprojectreconnect.projectreconnect.R;
 import com.parse.ParseUser;
@@ -27,14 +28,14 @@ public class AddReConnectionAdapter extends RecyclerView.Adapter<AddReConnection
     ArrayList<ParseUser> suggestions;
     Context context;
 
-    public AddReConnectionAdapter(ArrayList<ParseUser> suggestions) {
+    public AddReConnectionAdapter(Context context, ArrayList<ParseUser> suggestions) {
+        this.context = context;
         this.suggestions = suggestions;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // get context and inflate view
-        context = parent.getContext();
+        //  inflate view
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // create the view using the item_feed layout
@@ -107,7 +108,9 @@ public class AddReConnectionAdapter extends RecyclerView.Adapter<AddReConnection
 
                 switch (v.getId()) {
                     case R.id.btReConnect:
-                        // send request to host friend or refugee friend
+                        if(context instanceof MainActivity){
+                            ((MainActivity) context).showInvitationDialog();
+                        }
                         break;
                     case R.id.btSeeProfile:
                         Intent i = new Intent(context, ProfileActivity.class);
@@ -121,4 +124,5 @@ public class AddReConnectionAdapter extends RecyclerView.Adapter<AddReConnection
 
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.goprojectreconnect.projectreconnect.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +51,16 @@ public class MemoryMapAdapter extends RecyclerView.Adapter<MemoryMapAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         ParseFile picture = pictures.get(position);
 
+        // get size of screen
+        DisplayMetrics sizes = context.getResources().getDisplayMetrics();
+        int screenWidth = sizes.widthPixels;
+        int pictureSize = (screenWidth / 3);
+
         // populate views
         Glide.with(context)
                 .load(picture.getUrl())
-                .fitCenter()
+                .centerCrop()
+                .override(pictureSize, pictureSize )
                 .into(holder.ivPicture);
 
         Glide.with(context)

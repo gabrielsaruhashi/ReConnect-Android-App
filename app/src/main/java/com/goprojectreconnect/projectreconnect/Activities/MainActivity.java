@@ -18,9 +18,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
+import com.goprojectreconnect.projectreconnect.Fragments.DialogFragments.InvitationDialogFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainAddReConnectionFragment;
+import com.goprojectreconnect.projectreconnect.Fragments.MainHomeFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainInboxFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainMemoriesFragment;
+import com.goprojectreconnect.projectreconnect.Fragments.MainProfileFragment;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
 import com.parse.ParseUser;
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
 
-    private int imageResId[] = new int[] {R.drawable.ic_group_add, R.drawable.ic_photo, R.drawable.ic_mail};
+    private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_photo, R.drawable.ic_mail, R.drawable.ic_person, R.drawable.ic_group_add};
     private ParseUser currentUser;
     private MainFragmentPagerAdapter mMainFragmentPagerAdapter;
     Context context;
@@ -124,10 +127,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        private final int PAGE_COUNT = 3;
+        private final int PAGE_COUNT = 5;
+        private MainHomeFragment mainHomeFragment;
         private MainAddReConnectionFragment addReConnectionFragment;
         private MainMemoriesFragment mainMemoriesFragment;
         private MainInboxFragment mainInboxFragment;
+        private MainProfileFragment mainProfileFragment;
 
 
         public MainFragmentPagerAdapter(FragmentManager fm) {
@@ -139,14 +144,20 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
-                addReConnectionFragment = getAddReconnectionInstance();
-                return addReConnectionFragment;
+                mainHomeFragment = getMainHomeInstance();
+                return mainHomeFragment;
             } else if (position == 1) {
                 mainMemoriesFragment = getMainMemoriesInstace();
                 return mainMemoriesFragment;
             } else if (position == 2) {
                 mainInboxFragment = getMainInboxInstance();
                 return mainInboxFragment;
+            } else if (position == 3) {
+                mainProfileFragment = getMainProfileInstance();
+                return mainProfileFragment;
+            } else if (position == 4) {
+                addReConnectionFragment = getAddReconnectionInstance();
+                return addReConnectionFragment;
             } else {
                 return null;
             }
@@ -162,19 +173,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            /*// Generate title based on item position
-            Drawable image = ContextCompat.getDrawable(context, imageResId[position]);
-            //Drawable image = context.getResources().getDrawable(imageResId[position]);
-            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
-            // Replace blank spaces with image icon
-            SpannableString sb = new SpannableString("   " + tabTitles[position]);
-            ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
-            sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            return sb;*/
-
             return null;
         }
 
+        private MainHomeFragment getMainHomeInstance() {
+            return (mainHomeFragment == null)?
+                    new MainHomeFragment() : mainHomeFragment;
+        }
         private MainAddReConnectionFragment getAddReconnectionInstance() {
             return (addReConnectionFragment == null)?
                     new MainAddReConnectionFragment() : addReConnectionFragment;
@@ -189,6 +194,17 @@ public class MainActivity extends AppCompatActivity {
             return (mainInboxFragment == null)?
                     new MainInboxFragment() : mainInboxFragment;
         }
+
+        private MainProfileFragment getMainProfileInstance() {
+            return (mainProfileFragment == null)?
+                    new MainProfileFragment() : mainProfileFragment;
+        }
+    }
+
+    public void showInvitationDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        InvitationDialogFragment invitationDialogFragment = InvitationDialogFragment.newInstance();
+        invitationDialogFragment.show(fm, "fragment_invitation_dialog_fragment");
     }
 
 }

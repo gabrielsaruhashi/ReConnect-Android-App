@@ -65,4 +65,7 @@
     <string name="about_badge">ABOUT ME</string>
     <string name="integration_badge">FOR ME, INTEGRATION IS&#8230;</string>
     <string name="hope_badge">MY HOPE FOR THE FUTURE IS&#8230;</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

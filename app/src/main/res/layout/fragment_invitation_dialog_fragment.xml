@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.goprojectreconnect.projectreconnect.Fragments.DialogFragments.InvitationDialogFragment">
+
+
+    <EditText
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:id="@+id/etMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:hint="Send a message introducing yourself!"
+        android:layout_marginTop="51dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/etMessage"
+        android:layout_below="@+id/etMessage"
+        android:layout_marginEnd="17dp"
+        android:layout_marginTop="18dp"
+        android:text="Send"
+        tools:text="Send" />
+</RelativeLayout>

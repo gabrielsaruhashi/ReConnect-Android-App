@@ -1,0 +1,93 @@
+package com.goprojectreconnect.projectreconnect.Fragments.DialogFragments;
+
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.goprojectreconnect.projectreconnect.Models.Notification;
+import com.goprojectreconnect.projectreconnect.R;
+import com.goprojectreconnect.projectreconnect.ReConnectApplication;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class InvitationDialogFragment extends DialogFragment {
+
+    private EditText etMessage;
+    Button btSend;
+    private ParseUser currentUser;
+
+    public InvitationDialogFragment() {
+        // Required empty public constructor
+    }
+
+    public static InvitationDialogFragment newInstance() {
+        InvitationDialogFragment frag = new InvitationDialogFragment();
+
+        return frag;
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        currentUser = ReConnectApplication.getCurrentUser();
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_invitation_dialog_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Get field from view
+        etMessage = (EditText) view.findViewById(R.id.etMessage);
+        btSend = (Button) view.findViewById(R.id.btSend);
+
+        // set listener
+        btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Notification notification = new Notification();
+
+                //TODO save recipient id to query
+                //notification.setRecipientId();
+                notification.setRecipientName(currentUser.getString("name"));
+                notification.setNotificationImageUrl(currentUser.getString("profile_image_url"));
+                notification.setMessage(etMessage.getText().toString());
+
+                notification.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                // dismiss dialog
+                dismiss();
+            }
+        });
+
+        getDialog().setTitle("Invite to ReConnect");
+        // Show soft keyboard automatically and request focus to field
+        etMessage.requestFocus();
+        getDialog().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+}
+

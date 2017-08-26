@@ -15,7 +15,6 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -46,8 +45,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.goprojectreconnect.projectreconnect.Adapters.MemoryMapAdapter;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -81,18 +82,12 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        currentUser = ReConnectApplication.getCurrentUser();
-        //TODO what is the best way to store parsefiles
-        // get pictures associated with country from database
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment & context
+        currentUser = ReConnectApplication.getCurrentUser();
         View view = inflater.inflate(R.layout.fragment_main_memories, container, false);
         context = getActivity();
 
@@ -153,12 +148,25 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
 
                         // save uploaded picture to the cloud as a parsefile
                         final ParseFile file = new ParseFile("image.JPEG", image);
-                        file.saveInBackground();
+                        file.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    // add to array
+                                    pictures.add(0, file);
+                                    // save user profile picture to array
+                                    uploaderPictures.add(currentUser.getString("profile_image_url"));
 
-                        // add to array
-                        pictures.add(file);
-                        // save user profile picture to array
-                        uploaderPictures.add(currentUser.getString("profile_image_url"));
+                                    // notify adapter that data set changed and scroll
+                                    mapAdapter.notifyItemInserted(0);
+                                    rvPhotos.scrollToPosition(0);
+                                } else {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+
 
                     } catch (IOException e) {
                         e.getMessage();
@@ -166,8 +174,8 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
                 }
 
                 // notify adapter that data set changed
-                mapAdapter.notifyDataSetChanged();
-                rvPhotos.scrollToPosition(0);
+                //mapAdapter.notifyDataSetChanged();
+
                 // TODO update database based on location
             }
 
@@ -347,4 +355,8 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

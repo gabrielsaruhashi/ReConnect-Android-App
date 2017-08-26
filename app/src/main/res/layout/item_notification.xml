@@ -27,24 +27,23 @@
         android:text="TextView"
         android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/tvLastMessageTime"
-        android:layout_marginTop="@dimen/rv_margin_top"
+    <Button
+        android:id="@+id/btAccept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:text="Textview"
-        android:textSize="12sp" />
-
+        android:layout_below="@id/tvName"
+        android:text="Accept"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
 
     <TextView
-        android:id="@+id/tvLastMessage"
+        android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:text="Textview"
-        android:layout_below="@id/tvName"
-        android:layout_alignStart="@id/tvName"
-        android:layout_alignLeft="@id/tvName" />
+        android:layout_toEndOf="@id/ivProfilePicture"
+        android:layout_marginLeft="@dimen/element_margin"
+        android:layout_centerVertical="true"
+        android:text="TextView" />
+
+
 </RelativeLayout>

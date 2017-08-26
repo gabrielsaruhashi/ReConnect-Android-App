@@ -63,11 +63,24 @@ public class MainInboxFragment extends Fragment {
                 DividerItemDecorator(rvChats.getContext(), DividerItemDecorator.VERTICAL_LIST);
         rvChats.addItemDecoration(itemDecoration);
 
+        populateChatList();
+
         return v;
     }
 
     public void populateChatList() {
         //TODO implement method
+        ArrayList<Chat> dummyChats = new ArrayList<>();
+        for (int i = 0; i < 20; i ++) {
+            Chat chat = new Chat();
+            chat.setName("Gabriel Saruhashi");
+            chat.setLastMessage("Hi");
+            chat.setProfilePictureUrl("https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/17201093_1299062806852781_4533647239193588184_n.jpg?oh=d5a76e316a3ef0fd3c4bfec641706409&oe=5A23FCC9");
+            chat.setTimestamp("2h");
+            dummyChats.add(chat);
+        }
+        chats.addAll(dummyChats);
+        adapter.notifyDataSetChanged();
     }
 
 }

@@ -39,11 +39,11 @@ public class MainAddReConnectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_add_reconnection, container, false);
-        context = getContext();
+        context = getActivity();
 
         // instantiate recycler view, adapter and arraylist
         suggestions = new ArrayList<>();
-        mAdapter = new AddReConnectionAdapter(suggestions);
+        mAdapter = new AddReConnectionAdapter(context, suggestions);
         rvSuggestions = (RecyclerView) view.findViewById(R.id.rvRecommendations);
 
         // attach the adapter and layout manager
