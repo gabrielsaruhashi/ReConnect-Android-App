@@ -18,8 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
-import com.goprojectreconnect.projectreconnect.Fragments.DialogFragments.InvitationDialogFragment;
-import com.goprojectreconnect.projectreconnect.Fragments.MainAddReConnectionFragment;
+import com.goprojectreconnect.projectreconnect.Fragments.AddReConnectionFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainHomeFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainInboxFragment;
 import com.goprojectreconnect.projectreconnect.Fragments.MainMemoriesFragment;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
 
-    private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_photo, R.drawable.ic_mail, R.drawable.ic_person, R.drawable.ic_group_add};
+    private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_photo, R.drawable.ic_mail, R.drawable.ic_person};
     private ParseUser currentUser;
     private MainFragmentPagerAdapter mMainFragmentPagerAdapter;
     Context context;
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
         private final int PAGE_COUNT = 5;
         private MainHomeFragment mainHomeFragment;
-        private MainAddReConnectionFragment addReConnectionFragment;
+        private AddReConnectionFragment addReConnectionFragment;
         private MainMemoriesFragment mainMemoriesFragment;
         private MainInboxFragment mainInboxFragment;
         private MainProfileFragment mainProfileFragment;
@@ -155,10 +154,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (position == 3) {
                 mainProfileFragment = getMainProfileInstance();
                 return mainProfileFragment;
-            } else if (position == 4) {
-                addReConnectionFragment = getAddReconnectionInstance();
-                return addReConnectionFragment;
-            } else {
+            }  else {
                 return null;
             }
 
@@ -180,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
             return (mainHomeFragment == null)?
                     new MainHomeFragment() : mainHomeFragment;
         }
-        private MainAddReConnectionFragment getAddReconnectionInstance() {
+        private AddReConnectionFragment getAddReconnectionInstance() {
             return (addReConnectionFragment == null)?
-                    new MainAddReConnectionFragment() : addReConnectionFragment;
+                    new AddReConnectionFragment() : addReConnectionFragment;
         }
 
         private MainMemoriesFragment getMainMemoriesInstace() {
@@ -199,12 +195,6 @@ public class MainActivity extends AppCompatActivity {
             return (mainProfileFragment == null)?
                     new MainProfileFragment() : mainProfileFragment;
         }
-    }
-
-    public void showInvitationDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        InvitationDialogFragment invitationDialogFragment = InvitationDialogFragment.newInstance();
-        invitationDialogFragment.show(fm, "fragment_invitation_dialog_fragment");
     }
 
 }

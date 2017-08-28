@@ -53,7 +53,7 @@ public class MainInboxFragment extends Fragment {
         // initialize recycler view
         rvChats = (RecyclerView) v.findViewById(R.id.rvChats);
 
-        // attach the adapter to the RecyclerView
+        // attach the invitationsAdapter to the RecyclerView
         rvChats.setAdapter(adapter);
         // Set layout manager to position the items
         rvChats.setLayoutManager(new LinearLayoutManager(getContext()));

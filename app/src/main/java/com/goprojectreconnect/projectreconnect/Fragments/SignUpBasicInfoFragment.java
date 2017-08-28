@@ -152,7 +152,7 @@ public class SignUpBasicInfoFragment extends Fragment implements GoogleApiClient
         etCity.setOnItemClickListener(mAutocompleteClickListener);
         etCountry.setOnItemClickListener(mAutocompleteClickListener);
 
-        // Set up the adapter that will retrieve suggestions from the Places Geo Data API that cover
+        // Set up the invitationsAdapter that will retrieve suggestions from the Places Geo Data API that cover
         // the entire world.
         mAdapter = new PlaceAutoCompleteAdapter(context, mGoogleApiClient, BOUNDS_GREATER_SYDNEY,
                 null);
@@ -221,7 +221,7 @@ public class SignUpBasicInfoFragment extends Fragment implements GoogleApiClient
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             /*
              Retrieve the place ID of the selected item from the Adapter.
-             The adapter stores each Place suggestion in a AutocompletePrediction from which we
+             The invitationsAdapter stores each Place suggestion in a AutocompletePrediction from which we
              read the place ID and title.
               */
             final AutocompletePrediction item = mAdapter.getItem(position);

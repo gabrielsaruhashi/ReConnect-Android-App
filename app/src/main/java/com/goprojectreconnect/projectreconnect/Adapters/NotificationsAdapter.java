@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,7 +70,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         @BindView(R.id.tvName)
         TextView tvName;
         @BindView(R.id.btAccept)
-        Button btAccept;
+        ImageView btAccept;
 
         @BindView(R.id.tvMessage)
         TextView tvMessage;

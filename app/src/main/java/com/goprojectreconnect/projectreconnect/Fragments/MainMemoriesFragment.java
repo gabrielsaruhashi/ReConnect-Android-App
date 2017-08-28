@@ -101,12 +101,12 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
             pictures = new ArrayList<ParseFile>();
             uploaderPictures = new ArrayList<String>();
 
-            // instantiate recycler view and adapter
+            // instantiate recycler view and invitationsAdapter
             rvPhotos = (RecyclerView) view.findViewById(R.id.rvPhotos);
 
             mapAdapter = new MemoryMapAdapter(pictures, uploaderPictures);
 
-            // set up the recyclerview adapter and layout manager
+            // set up the recyclerview invitationsAdapter and layout manager
             rvPhotos.setAdapter(mapAdapter);
             rvPhotos.setLayoutManager(new GridLayoutManager(context, 3));
 
@@ -169,7 +169,7 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
                                     // save user profile picture to array
                                     uploaderPictures.add(currentUser.getString("profile_image_url"));
 
-                                    // notify adapter that data set changed and scroll
+                                    // notify invitationsAdapter that data set changed and scroll
                                     mapAdapter.notifyItemInserted(0);
                                     rvPhotos.scrollToPosition(0);
                                 } else {
@@ -185,7 +185,7 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
                     }
                 }
 
-                // notify adapter that data set changed
+                // notify invitationsAdapter that data set changed
                 //mapAdapter.notifyDataSetChanged();
 
                 // TODO update database based on location

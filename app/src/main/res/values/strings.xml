@@ -54,6 +54,9 @@
     <string name="from_label">From</string>
     <string name="since_label">Member since</string>
     <string name="mutual_label">Mutual ReConnections</string>
+    <string name="invitation_badge">Invitations</string>
+    <string name="reconnection_badge">ReConnections</string>
+    <string name="suggestion_badge">Find ReConnections</string>
 
     <!-- Strings for Profile Activity -->
     <string name="reference_badge">References</string>

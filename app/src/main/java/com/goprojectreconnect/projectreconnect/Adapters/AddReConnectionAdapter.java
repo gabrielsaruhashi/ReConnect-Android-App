@@ -12,7 +12,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.goprojectreconnect.projectreconnect.Activities.MainActivity;
+import com.goprojectreconnect.projectreconnect.Activities.AddReconnectionActivity;
 import com.goprojectreconnect.projectreconnect.Activities.ProfileActivity;
 import com.goprojectreconnect.projectreconnect.R;
 import com.parse.ParseUser;
@@ -108,8 +108,8 @@ public class AddReConnectionAdapter extends RecyclerView.Adapter<AddReConnection
 
                 switch (v.getId()) {
                     case R.id.btReConnect:
-                        if(context instanceof MainActivity){
-                            ((MainActivity) context).showInvitationDialog();
+                        if(context instanceof AddReconnectionActivity){
+                            ((AddReconnectionActivity) context).showInvitationDialog();
                         }
                         break;
                     case R.id.btSeeProfile:

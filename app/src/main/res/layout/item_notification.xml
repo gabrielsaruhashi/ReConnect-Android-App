@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginStart="@dimen/activity_horizontal_margin">
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="@dimen/element_small_margin">
 
     <ImageView
         android:id="@+id/ivProfilePicture"
@@ -27,15 +28,6 @@
         android:text="TextView"
         android:textColor="@color/black" />
 
-    <Button
-        android:id="@+id/btAccept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/tvName"
-        android:text="Accept"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
-
     <TextView
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
@@ -44,6 +36,25 @@
         android:layout_marginLeft="@dimen/element_margin"
         android:layout_centerVertical="true"
         android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/btCancel"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/tvName"
+        android:layout_toStartOf="@+id/btAccept"
+        android:layout_marginEnd="@dimen/element_small_margin"
+        app:srcCompat="@drawable/ic_cancel_circle" />
+
+    <ImageView
+        android:id="@+id/btAccept"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/btCancel"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="11dp"
+        app:srcCompat="@drawable/ic_check_circle"
+        android:tint="@color/colorAccent"/>
 
 
 </RelativeLayout>

@@ -24,7 +24,7 @@ import java.util.List;
 import static com.goprojectreconnect.projectreconnect.ReConnectApplication.getFacebookFriends;
 
 
-public class MainAddReConnectionFragment extends Fragment {
+public class AddReConnectionFragment extends Fragment {
 
     Context context;
     ArrayList<ParseUser> suggestions;
@@ -32,7 +32,7 @@ public class MainAddReConnectionFragment extends Fragment {
     RecyclerView rvSuggestions;
     ParseUser currentUser;
 
-    public MainAddReConnectionFragment() {
+    public AddReConnectionFragment() {
     }
 
     @Override
@@ -41,12 +41,12 @@ public class MainAddReConnectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_add_reconnection, container, false);
         context = getActivity();
 
-        // instantiate recycler view, adapter and arraylist
+        // instantiate recycler view, invitationsAdapter and arraylist
         suggestions = new ArrayList<>();
         mAdapter = new AddReConnectionAdapter(context, suggestions);
         rvSuggestions = (RecyclerView) view.findViewById(R.id.rvRecommendations);
 
-        // attach the adapter and layout manager
+        // attach the invitationsAdapter and layout manager
         rvSuggestions.setAdapter(mAdapter);
         rvSuggestions.setLayoutManager(new LinearLayoutManager(getContext()));
 
