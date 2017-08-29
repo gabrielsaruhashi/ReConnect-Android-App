@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
 
-    private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_photo, R.drawable.ic_mail, R.drawable.ic_person};
+    private int imageResId[] = new int[] {R.drawable.ic_home, R.drawable.ic_explore, R.drawable.ic_mail, R.drawable.ic_person};
     private ParseUser currentUser;
     private MainFragmentPagerAdapter mMainFragmentPagerAdapter;
     Context context;

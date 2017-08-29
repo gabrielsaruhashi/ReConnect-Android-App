@@ -15,8 +15,8 @@ import android.widget.Button;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.goprojectreconnect.projectreconnect.Activities.MainActivity;
 import com.goprojectreconnect.projectreconnect.R;
+import com.goprojectreconnect.projectreconnect.Activities.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

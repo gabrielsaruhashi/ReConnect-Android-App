@@ -76,7 +76,7 @@ public class MainInboxFragment extends Fragment {
         // each reconnection item is a chat
         ParseQuery<Reconnection> query = ParseQuery.getQuery("Reconnection");
         //TODO different queries for different types of users
-        query.whereEqualTo("refugee", currentUser);
+        //query.whereEqualTo("refugee", currentUser);
         query.include("host");
         query.include("refugee");
         query.findInBackground(new FindCallback<Reconnection>() {

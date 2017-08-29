@@ -14,9 +14,13 @@ import com.goprojectreconnect.projectreconnect.Models.Message;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseLiveQueryClient;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SubscriptionHandling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +51,52 @@ public class ChatActivity extends AppCompatActivity {
 
         // instantiate user and message posting
         currentUser = ReConnectApplication.getCurrentUser();
+        setupLiveQuery();
         setupMessagePosting();
+    }
+
+    public void setupLiveQuery() {
+        ParseLiveQueryClient parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient();
+
+        ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
+        parseQuery.include("sender");
+        // only listen to events not created by user && from this reconnection
+        parseQuery.whereEqualTo("reconnection_id", reconnectionId);
+
+        // Connect to Parse server
+        SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
+
+        // Listen for CREATE events
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, new
+            SubscriptionHandling.HandleEventCallback<Message>() {
+                @Override
+                public void onEvent(ParseQuery<Message> query, final Message message) {
+                    // ensure we only add messages from other users
+                    if (message.getSender() != null && !message.getSender().getObjectId().equals(currentUser.getObjectId())) {
+                        // get sender's info
+                        message.getParseUser("sender").fetchInBackground(new GetCallback<ParseUser>() {
+                            @Override
+                            public void done(ParseUser user, ParseException e) {
+                                if (e == null) {
+                                    message.setSender(user);
+                                    mMessages.add(0, message);
+                                    // RecyclerView updates need to be run on the UI thread
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mAdapter.notifyDataSetChanged();
+                                            rvChat.scrollToPosition(0);
+                                        }
+                                    });
+                                } else {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    }
+                };
+            });
     }
 
     public void setupMessagePosting() {
@@ -72,16 +121,26 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String data = etMessage.getText().toString();
-                Message message = new Message();
+                final Message message = new Message();
                 message.setReconnectionId(reconnectionId);
                 message.setSender(currentUser);
                 message.setBody(data);
-                message.saveInBackground();
+                message.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            //update UI
+                            mMessages.add(0, message);
+                            mAdapter.notifyItemInserted(0);
+                            rvChat.smoothScrollToPosition(0);
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
                 // update UI
-                mMessages.add(0, message);
-                mAdapter.notifyItemInserted(0);
-                rvChat.smoothScrollToPosition(0);
+                // //refreshMessages();
 
                 // clear editText
                 etMessage.setText(null);

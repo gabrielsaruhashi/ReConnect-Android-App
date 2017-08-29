@@ -47,7 +47,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Message message = mMessages.get(position);
-        final boolean isMe = message.getSender() != null && message.getSender().getObjectId().equals(currentUser.getObjectId());
+        final boolean isMe = message.getSender() != null &&
+                message.getSender().getObjectId().equals(currentUser.getObjectId());
 
         if (isMe) {
             // make other body and image invisible, set my text to visible
