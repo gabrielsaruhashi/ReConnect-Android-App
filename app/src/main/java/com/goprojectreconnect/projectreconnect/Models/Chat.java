@@ -9,11 +9,13 @@ public class Chat {
     private String lastMessage;
     private String timestamp;
     private String profilePictureUrl;
+    private String reconnectionId;
 
     public static Chat fromReconnectionObject(Reconnection reconnection) {
         Chat chat = new Chat();
         chat.setName(reconnection.getHost().getString("name"));
         chat.setProfilePictureUrl(reconnection.getHost().getString("profile_image_url"));
+        chat.setReconnectionId(reconnection.getObjectId());
 
         if (reconnection.getLastMessage() == null) {
             chat.setLastMessage("You have just ReConnected :) !");
@@ -54,5 +56,13 @@ public class Chat {
 
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
+    }
+
+    public String getReconnectionId() {
+        return reconnectionId;
+    }
+
+    public void setReconnectionId(String reconnectionId) {
+        this.reconnectionId = reconnectionId;
     }
 }

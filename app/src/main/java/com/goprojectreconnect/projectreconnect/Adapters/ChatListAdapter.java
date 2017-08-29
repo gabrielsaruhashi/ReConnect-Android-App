@@ -1,6 +1,7 @@
 package com.goprojectreconnect.projectreconnect.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.goprojectreconnect.projectreconnect.Activities.ChatActivity;
 import com.goprojectreconnect.projectreconnect.Models.Chat;
 import com.goprojectreconnect.projectreconnect.R;
 
@@ -94,8 +96,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 // get the event at the position
                 Chat chat = chats.get(position);
 
-                // do something
-
+                // launch chat
+                Intent i = new Intent(context, ChatActivity.class);
+                i.putExtra("id", chat.getReconnectionId());
+                context.startActivity(i);
             }
         }
     }

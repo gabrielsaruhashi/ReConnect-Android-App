@@ -72,7 +72,6 @@ public class MainInboxFragment extends Fragment {
     }
 
     public void populateChatList() {
-        //TODO implement method. Each ReConnection is a chat
 
         // each reconnection item is a chat
         ParseQuery<Reconnection> query = ParseQuery.getQuery("Reconnection");
