@@ -46,15 +46,17 @@ public class MainProfileFragment extends Fragment {
     @BindView(R.id.tvIntegration)
     TextView tvIntegration;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment & context
-        View view = inflater.inflate(R.layout.activity_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         context = getActivity();
         ButterKnife.bind(this, view);
 
         currentUser = ReConnectApplication.getCurrentUser();
+
         setupViews();
 
         return view;
@@ -81,7 +83,7 @@ public class MainProfileFragment extends Fragment {
         llRequestReConnection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO invite ReConnection
+                // TODO allow users to edit profile
             }
         });
     }

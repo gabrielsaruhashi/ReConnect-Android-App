@@ -3,6 +3,7 @@ package com.goprojectreconnect.projectreconnect.Activities;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.goprojectreconnect.projectreconnect.R;
+import com.goprojectreconnect.projectreconnect.ReConnectApplication;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
@@ -20,6 +22,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     Context context;
     ParseUser profileOwner;
+    ParseUser currentUser;
+    boolean isCurrentUser;
 
     // UI Views
     @BindView(R.id.tvName)
@@ -31,13 +35,15 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.tvReferenceCount)
     TextView tvReferenceCount;
     @BindView(R.id.llRequestReConnection)
-    LinearLayout llRequestReConnection;
+    LinearLayout llRequest;
     @BindView(R.id.tvAbout)
     TextView tvAbout;
     @BindView(R.id.tvHope)
     TextView tvHope;
     @BindView(R.id.tvIntegration)
     TextView tvIntegration;
+    @BindView(R.id.tvRequestBanner)
+    TextView tvRequestReconnectionBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +52,11 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         context = this;
+        currentUser = ReConnectApplication.getCurrentUser();
 
         // unwrap intent, if any
         profileOwner = getIntent().getParcelableExtra("profile_owner");
+        isCurrentUser = profileOwner.getObjectId().equals(currentUser.getObjectId());
 
         setupViews();
 
@@ -61,6 +69,12 @@ public class ProfileActivity extends AppCompatActivity {
         tvHope.setText(profileOwner.getString("hope_essay"));
         tvIntegration.setText(profileOwner.getString("integration_essay"));
 
+        // if current user, change CTO to Edit Profile
+        if (isCurrentUser) {
+            llRequest.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            tvRequestReconnectionBanner.setText(getResources().getString(R.string.edit_profile_badge));
+        }
+
         // resize image to fit width
         Point size = new Point();
         this.getWindowManager().getDefaultDisplay().getSize(size);
@@ -72,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .dontAnimate()
                 .into(ivProfilePicture);
 
-        llRequestReConnection.setOnClickListener(new View.OnClickListener() {
+        llRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO invite ReConnection

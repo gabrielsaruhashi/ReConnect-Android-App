@@ -68,6 +68,7 @@
     <string name="about_badge">ABOUT ME</string>
     <string name="integration_badge">FOR ME, INTEGRATION IS&#8230;</string>
     <string name="hope_badge">MY HOPE FOR THE FUTURE IS&#8230;</string>
+    <string name="edit_profile_badge">Edit Profile</string>
 
     <!-- Chat Activity -->
     <string name="message_hint">Say anything</string>
