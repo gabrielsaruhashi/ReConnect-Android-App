@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.fragment_profile);
         ButterKnife.bind(this);
 
         context = this;
@@ -70,9 +70,9 @@ public class ProfileActivity extends AppCompatActivity {
         tvIntegration.setText(profileOwner.getString("integration_essay"));
 
         // if current user, change CTO to Edit Profile
-        if (isCurrentUser) {
-            llRequest.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            tvRequestReconnectionBanner.setText(getResources().getString(R.string.edit_profile_badge));
+        if (!isCurrentUser) {
+            llRequest.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+            tvRequestReconnectionBanner.setText(getResources().getString(R.string.request_reconnection_banner));
         }
 
         // resize image to fit width
