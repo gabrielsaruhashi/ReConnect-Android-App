@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.goprojectreconnect.projectreconnect.Clients.FacebookClient;
 import com.goprojectreconnect.projectreconnect.Models.FacebookFriend;
 import com.goprojectreconnect.projectreconnect.Models.Notification;
+import com.goprojectreconnect.projectreconnect.Models.Reconnection;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
@@ -56,6 +57,7 @@ public class ReConnectApplication extends Application {
         builder.networkInterceptors().add(httpLoggingInterceptor);
 
         // register Parse classes
+        ParseObject.registerSubclass(Reconnection.class);
         ParseObject.registerSubclass(Notification.class);
 
         // set applicationId and server based on the values in the Heroku settings.

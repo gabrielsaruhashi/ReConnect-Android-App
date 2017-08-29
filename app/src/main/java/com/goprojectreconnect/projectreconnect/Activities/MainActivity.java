@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        private final int PAGE_COUNT = 5;
+        private final int PAGE_COUNT = 4;
         private MainHomeFragment mainHomeFragment;
         private AddReConnectionFragment addReConnectionFragment;
         private MainMemoriesFragment mainMemoriesFragment;
@@ -197,4 +197,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // do nothing
+    }
 }

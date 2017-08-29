@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/ivProfilePicture"
         android:layout_marginTop="@dimen/rv_margin_top"
-        android:layout_width="@dimen/imageview_profile"
-        android:layout_height="@dimen/imageview_profile"
+        android:layout_width="@dimen/small_imageview_profile"
+        android:layout_height="@dimen/small_imageview_profile"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/ivProfilePicture"
-        android:layout_marginLeft="@dimen/element_margin"
+        android:layout_marginStart="@dimen/element_margin"
         android:text="TextView"
         android:textColor="@color/black" />
 
@@ -33,9 +33,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/ivProfilePicture"
-        android:layout_marginLeft="@dimen/element_margin"
+        android:layout_below="@id/tvName"
+        android:layout_marginTop="@dimen/element_small_margin"
+        android:layout_marginStart="@dimen/element_margin"
         android:layout_centerVertical="true"
-        android:text="TextView" />
+        android:layout_toStartOf="@+id/btCancel"
+        android:text="Hi I want to reconnect with you because you're cool. Coolness is cool. Awesomeness is awesome" />
 
     <ImageView
         android:id="@+id/btCancel"

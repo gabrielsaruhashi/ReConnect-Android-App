@@ -45,17 +45,25 @@
             android:layout_marginTop="@dimen/element_small_margin"
             android:text="Hey" />
 
+
+        <!-- Empty layout (0x0 dp) centered horizontally -->
+        <Space android:id="@+id/dummy"
+            android:layout_below="@id/tvAbout"
+            android:layout_marginTop="@dimen/element_small_margin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/tvAbout"
-            android:layout_alignRight="@+id/tvAbout"
             android:layout_below="@+id/tvAbout"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginTop="@dimen/element_small_margin" />
+            android:layout_marginTop="@dimen/element_small_margin"
+            android:layout_toLeftOf="@id/dummy"
+            android:layout_toStartOf="@id/dummy"/>
 
         <TextView
             android:id="@+id/tvCount"
@@ -63,9 +71,10 @@
             android:layout_height="wrap_content"
             android:text="(32 ReConnections)"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:layout_alignTop="@+id/ratingBar"
-            android:layout_toRightOf="@+id/tvAbout"
-            android:layout_toEndOf="@+id/tvAbout" />
+            android:layout_below="@id/tvAbout"
+            android:layout_marginTop="@dimen/element_small_margin"
+            android:layout_toRightOf="@id/dummy"
+            android:layout_toEndOf="@+id/dummy" />
 
         <Button
             android:id="@+id/btReConnect"

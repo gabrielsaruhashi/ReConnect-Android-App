@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.goprojectreconnect.projectreconnect.Activities.AddReconnectionActivity;
 import com.goprojectreconnect.projectreconnect.Adapters.AddReConnectionAdapter;
-import com.goprojectreconnect.projectreconnect.Adapters.NotificationsAdapter;
+import com.goprojectreconnect.projectreconnect.Adapters.InvitationsAdapter;
 import com.goprojectreconnect.projectreconnect.Helpers.DividerItemDecorator;
 import com.goprojectreconnect.projectreconnect.Models.FacebookFriend;
 import com.goprojectreconnect.projectreconnect.Models.Notification;
@@ -38,7 +38,7 @@ public class MainHomeFragment extends Fragment {
     ParseUser currentUser;
 
     /* Invitations variables */
-    NotificationsAdapter invitationsAdapter;
+    InvitationsAdapter invitationsAdapter;
     ArrayList<Notification> invitations;
     RecyclerView rvInvitations;
 
@@ -62,7 +62,7 @@ public class MainHomeFragment extends Fragment {
 
        /* Instantiate Invitations' recycler view, invitationsAdapter and arraylist */
         invitations = new ArrayList<>();
-        invitationsAdapter = new NotificationsAdapter(context, invitations);
+        invitationsAdapter = new InvitationsAdapter(context, invitations);
         rvInvitations = (RecyclerView) v.findViewById(R.id.rvNotifications);
 
         // attach the invitationsAdapter to the RecyclerView

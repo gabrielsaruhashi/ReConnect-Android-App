@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.goprojectreconnect.projectreconnect.Fragments.DialogFragments.InvitationDialogFragment;
 import com.goprojectreconnect.projectreconnect.R;
+import com.parse.ParseUser;
 
 public class AddReconnectionActivity extends AppCompatActivity {
 
@@ -15,9 +16,9 @@ public class AddReconnectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_reconnection);
     }
 
-    public void showInvitationDialog() {
+    public void showInvitationDialog(ParseUser recipient) {
         FragmentManager fm = getSupportFragmentManager();
-        InvitationDialogFragment invitationDialogFragment = InvitationDialogFragment.newInstance();
+        InvitationDialogFragment invitationDialogFragment = InvitationDialogFragment.newInstance(recipient);
         invitationDialogFragment.show(fm, "fragment_invitation_dialog_fragment");
     }
 

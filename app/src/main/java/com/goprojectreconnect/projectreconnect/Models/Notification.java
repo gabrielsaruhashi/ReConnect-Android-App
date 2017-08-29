@@ -2,6 +2,7 @@ package com.goprojectreconnect.projectreconnect.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /**
  * Created by gabrielsaruhashi on 8/25/17.
@@ -10,7 +11,8 @@ import com.parse.ParseObject;
 @ParseClassName("Notification")
 public class Notification extends ParseObject {
     private int notificationType;
-    private String recipientId;
+    private ParseUser sender;
+    private ParseUser recipient;
     private String notificationImageUrl;
     private String recipientName;
     private String message;
@@ -50,12 +52,21 @@ public class Notification extends ParseObject {
         put("message", message);
     }
 
-    public String getRecipientId() {
-        return getString("recipient_id");
+    public ParseUser getRecipient() {
+        return getParseUser("recipient");
     }
 
-    public void setRecipientId(String recipientId) {
-        this.recipientId = recipientId;
-        put("recipient_id", recipientId);
+    public void setRecipient(ParseUser recipient) {
+        this.recipient = recipient;
+        put("recipient", recipient);
+    }
+
+    public ParseUser getSender() {
+        return getParseUser("sender");
+    }
+
+    public void setSender(ParseUser sender) {
+        this.sender = sender;
+        put("sender", sender);
     }
 }

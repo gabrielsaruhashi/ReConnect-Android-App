@@ -109,7 +109,7 @@ public class AddReConnectionAdapter extends RecyclerView.Adapter<AddReConnection
                 switch (v.getId()) {
                     case R.id.btReConnect:
                         if(context instanceof AddReconnectionActivity){
-                            ((AddReconnectionActivity) context).showInvitationDialog();
+                            ((AddReconnectionActivity) context).showInvitationDialog(suggestion);
                         }
                         break;
                     case R.id.btSeeProfile:

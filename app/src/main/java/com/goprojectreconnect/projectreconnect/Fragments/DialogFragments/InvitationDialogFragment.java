@@ -9,15 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.goprojectreconnect.projectreconnect.Models.Notification;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,15 +24,19 @@ import com.parse.SaveCallback;
 public class InvitationDialogFragment extends DialogFragment {
 
     private EditText etMessage;
-    Button btSend;
+    ImageButton btSend;
     private ParseUser currentUser;
 
     public InvitationDialogFragment() {
         // Required empty public constructor
     }
 
-    public static InvitationDialogFragment newInstance() {
+    public static InvitationDialogFragment newInstance(ParseUser recipient) {
         InvitationDialogFragment frag = new InvitationDialogFragment();
+
+        Bundle args = new Bundle();
+        args.putParcelable("recipient", recipient);
+        frag.setArguments(args);
 
         return frag;
     }
@@ -53,7 +56,7 @@ public class InvitationDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
         etMessage = (EditText) view.findViewById(R.id.etMessage);
-        btSend = (Button) view.findViewById(R.id.btSend);
+        btSend = (ImageButton) view.findViewById(R.id.ivSend);
 
         // set listener
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -61,23 +64,18 @@ public class InvitationDialogFragment extends DialogFragment {
             public void onClick(View v) {
                 Notification notification = new Notification();
 
-                //TODO save recipient id to query
-                //notification.setRecipientId();
+                // Fetch arguments from bundle and set title
+                ParseUser recipient = getArguments().getParcelable("recipient");
+
+                notification.setRecipient(recipient);
+                notification.setSender(currentUser);
                 notification.setRecipientName(currentUser.getString("name"));
                 notification.setNotificationImageUrl(currentUser.getString("profile_image_url"));
                 notification.setMessage(etMessage.getText().toString());
 
-                notification.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
+                notification.saveInBackground();
 
-                        } else {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
+                Toast.makeText(getContext(), "Successfully sent invitation", Toast.LENGTH_SHORT).show();
                 // dismiss dialog
                 dismiss();
             }

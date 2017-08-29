@@ -10,6 +10,20 @@ public class Chat {
     private String timestamp;
     private String profilePictureUrl;
 
+    public static Chat fromReconnectionObject(Reconnection reconnection) {
+        Chat chat = new Chat();
+        chat.setName(reconnection.getHost().getString("name"));
+        chat.setProfilePictureUrl(reconnection.getHost().getString("profile_image_url"));
+
+        if (reconnection.getLastMessage() == null) {
+            chat.setLastMessage("You have just ReConnected :) !");
+            chat.setTimestamp("Now");
+        }
+
+
+        return chat;
+    }
+
     public String getName() {
         return name;
     }

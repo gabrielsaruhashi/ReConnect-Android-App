@@ -14,15 +14,18 @@ import android.view.ViewGroup;
 import com.goprojectreconnect.projectreconnect.Adapters.ChatListAdapter;
 import com.goprojectreconnect.projectreconnect.Helpers.DividerItemDecorator;
 import com.goprojectreconnect.projectreconnect.Models.Chat;
+import com.goprojectreconnect.projectreconnect.Models.Reconnection;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class MainInboxFragment extends Fragment {
     ParseUser currentUser;
     Context context;
@@ -69,17 +72,30 @@ public class MainInboxFragment extends Fragment {
     }
 
     public void populateChatList() {
-        //TODO implement method
-        ArrayList<Chat> dummyChats = new ArrayList<>();
-        for (int i = 0; i < 20; i ++) {
-            Chat chat = new Chat();
-            chat.setName("Gabriel Saruhashi");
-            chat.setLastMessage("Hi");
-            chat.setProfilePictureUrl("https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/17201093_1299062806852781_4533647239193588184_n.jpg?oh=d5a76e316a3ef0fd3c4bfec641706409&oe=5A23FCC9");
-            chat.setTimestamp("2h");
-            dummyChats.add(chat);
-        }
-        chats.addAll(dummyChats);
+        //TODO implement method. Each ReConnection is a chat
+
+        // each reconnection item is a chat
+        ParseQuery<Reconnection> query = ParseQuery.getQuery("Reconnection");
+        //TODO different queries for different types of users
+        query.whereEqualTo("refugee", currentUser);
+        query.include("host");
+        query.include("refugee");
+        query.findInBackground(new FindCallback<Reconnection>() {
+            @Override
+            public void done(List<Reconnection> reconnections, ParseException e) {
+                if (e == null) {
+                    for (Reconnection reconnection : reconnections) {
+                        Chat chat = Chat.fromReconnectionObject(reconnection);
+                        chats.add(chat);
+                    }
+                    adapter.notifyDataSetChanged();
+
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         adapter.notifyDataSetChanged();
     }
 
