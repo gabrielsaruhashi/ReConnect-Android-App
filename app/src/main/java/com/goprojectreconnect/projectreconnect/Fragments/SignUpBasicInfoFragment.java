@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -161,8 +161,10 @@ public class SignUpBasicInfoFragment extends Fragment implements GoogleApiClient
         Glide.with(context)
                 .load(currentUser.getString("profile_image_url"))
                 .fitCenter()
-                .bitmapTransform(new RoundedCornersTransformation(context, 30, 10))
+                .bitmapTransform(new CropCircleTransformation(context))
                 .into(ivProfilePicture);
+
+        checkDatabaseForFields();
 
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,11 +177,28 @@ public class SignUpBasicInfoFragment extends Fragment implements GoogleApiClient
                 newCustomUser.setSomeArrayList("interests", interests);
                 newCustomUser.setSomeString("phone", etPhoneNumber.getText().toString());
                 newCustomUser.setSomeString("city", etCity.getText().toString());
+                newCustomUser.setSomeString("country", etCountry.getText().toString());
 
                 // call listener that changes viewpager page
                 onNextClick();
             }
         });
+    }
+
+    public void checkDatabaseForFields() {
+        if (currentUser.getString("phone") != null) {
+            etPhoneNumber.setText(currentUser.getString("phone"));
+        }
+
+        if (currentUser.getString("city") != null) {
+            etCity.setText(currentUser.getString("city"));
+        }
+
+        if (currentUser.getString("country") != null) {
+            etPhoneNumber.setText(currentUser.getString("country"));
+        }
+
+
     }
 
     public ArrayList<String> getSelectedInterests() {

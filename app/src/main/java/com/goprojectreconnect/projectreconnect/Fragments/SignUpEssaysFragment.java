@@ -44,6 +44,9 @@ public class SignUpEssaysFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_su_essays, container, false);
         unbinder = ButterKnife.bind(this, view);
         currentUser = ReConnectApplication.getCurrentUser();
+
+        checkDatabaseForFields();
+
         // click listener for next
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +66,19 @@ public class SignUpEssaysFragment extends Fragment {
         return view;
     }
 
+    public void checkDatabaseForFields() {
+        if (currentUser.getString("about_essay") != null) {
+            etAboutMe.setText(currentUser.getString("about_essay"));
+        }
+
+        if (currentUser.getString("hope_essay") != null) {
+            etHope.setText(currentUser.getString("hope_essay"));
+        }
+
+        if (currentUser.getString("integration_essay") != null) {
+            etIntegration.setText(currentUser.getString("integration_essay"));
+        }
+    }
 
     // Define the events that the fragment will use to communicate
     public interface OnNextClickedListener {

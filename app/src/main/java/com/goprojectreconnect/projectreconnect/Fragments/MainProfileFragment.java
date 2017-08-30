@@ -1,6 +1,7 @@
 package com.goprojectreconnect.projectreconnect.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.goprojectreconnect.projectreconnect.Activities.SignUpActivity;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
 import com.parse.ParseUser;
@@ -84,6 +86,8 @@ public class MainProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO allow users to edit profile
+                Intent i = new Intent(context, SignUpActivity.class);
+                context.startActivity(i);
             }
         });
     }
