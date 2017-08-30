@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         mMainFragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mMainFragmentPagerAdapter);
+
+        // set page limit
+        mViewPager.setOffscreenPageLimit(3);
+
         // give the Tab Layout the ViewPager
         tabLayout.setupWithViewPager(mViewPager);
 

@@ -26,6 +26,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.goprojectreconnect.projectreconnect.ReConnectApplication.getFacebookFriends;
@@ -142,6 +143,7 @@ public class MainHomeFragment extends Fragment {
             @Override
             public void done(List<ParseUser> users, ParseException e) {
                 if (e == null) {
+                    Collections.reverse(users);
                     suggestions.addAll(users);
                     suggestionsAdapter.notifyDataSetChanged();
                     rvSuggestions.smoothScrollToPosition(0);

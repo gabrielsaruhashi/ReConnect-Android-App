@@ -15,6 +15,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +40,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.goprojectreconnect.projectreconnect.Activities.MainActivity;
 import com.goprojectreconnect.projectreconnect.Adapters.MemoryMapAdapter;
 import com.goprojectreconnect.projectreconnect.R;
 import com.goprojectreconnect.projectreconnect.ReConnectApplication;
@@ -78,13 +79,16 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient;
 
 
-    //TODO kill this variable
-    static boolean mFirst;
 
     public MainMemoriesFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,48 +96,43 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
         // Inflate the layout for this fragment & context
         currentUser = ReConnectApplication.getCurrentUser();
 
-        if (mFirst == false) {
-            View view = inflater.inflate(R.layout.fragment_main_memories, container, false);
-            context = getActivity();
 
-            // instantiate pictures
-            //TODO get all pictures and uploaders
-            pictures = new ArrayList<ParseFile>();
-            uploaderPictures = new ArrayList<String>();
+        View view = inflater.inflate(R.layout.fragment_main_memories, container, false);
+        context = getActivity();
 
-            // instantiate recycler view and invitationsAdapter
-            rvPhotos = (RecyclerView) view.findViewById(R.id.rvPhotos);
+        // instantiate pictures
+        //TODO get all pictures and uploaders
+        pictures = new ArrayList<ParseFile>();
+        uploaderPictures = new ArrayList<String>();
 
-            mapAdapter = new MemoryMapAdapter(pictures, uploaderPictures);
+        // instantiate recycler view and invitationsAdapter
+        rvPhotos = (RecyclerView) view.findViewById(R.id.rvPhotos);
 
-            // set up the recyclerview invitationsAdapter and layout manager
-            rvPhotos.setAdapter(mapAdapter);
-            rvPhotos.setLayoutManager(new GridLayoutManager(context, 3));
+        mapAdapter = new MemoryMapAdapter(pictures, uploaderPictures);
 
-            // get reference to map fragment
-            mapFrag = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-            mapFrag.getMapAsync(this);
+        // set up the recyclerview invitationsAdapter and layout manager
+        rvPhotos.setAdapter(mapAdapter);
+        rvPhotos.setLayoutManager(new GridLayoutManager(context, 3));
 
-            // instantiate fab
-            myFab = (FloatingActionButton) view.findViewById(R.id.fab);
-            myFab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent photoPickerIntent = new Intent();
-                    photoPickerIntent.setType("image/*");
-                    photoPickerIntent.setAction(Intent.ACTION_GET_CONTENT);//
-                    photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    startActivityForResult(Intent.createChooser(photoPickerIntent, "Select Picture"), SELECT_IMAGE);
-                }
-            });
+        // get reference to map fragment
+        mapFrag = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFrag.getMapAsync(this);
 
-            // TODO destroy
-            mFirst = true;
+        // instantiate fab
+        myFab = (FloatingActionButton) view.findViewById(R.id.fab);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent();
+                photoPickerIntent.setType("image/*");
+                photoPickerIntent.setAction(Intent.ACTION_GET_CONTENT);//
+                photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                startActivityForResult(Intent.createChooser(photoPickerIntent, "Select Picture"), SELECT_IMAGE);
+            }
+        });
 
-            return view;
-        }
 
-        return null;
+        return view;
 
     }
 
@@ -184,9 +183,6 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
                         e.getMessage();
                     }
                 }
-
-                // notify invitationsAdapter that data set changed
-                //mapAdapter.notifyDataSetChanged();
 
                 // TODO update database based on location
             }
@@ -251,10 +247,12 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
 
     @Override
     public void onConnectionSuspended(int i) {
+        Log.e(MainActivity.class.getSimpleName(), "Error: " + i);
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        connectionResult.getErrorMessage();
     }
 
     @Override
@@ -262,9 +260,9 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
         super.onPause();
 
         //stop location updates when Activity is no longer active
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
-        }
+//        if (mGoogleApiClient != null) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+//        }
     }
 
     //GETTING PERMISSIONS
@@ -321,15 +319,10 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
 
         //Place current location marker
-        LatLng latLng = new LatLng(47.6380388889, 0);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        Bitmap bitmap = getBitmapFromVectorDrawable(getContext(), R.drawable.ic_location);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         //move map camera
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
     }
 
@@ -370,5 +363,6 @@ public class MainMemoriesFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mGoogleApiClient.disconnect();
     }
 }
